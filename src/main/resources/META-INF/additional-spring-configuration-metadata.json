@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "matrix.client.url",
+    "type": "java.lang.String",
+    "description": "A description for 'matrix.client.url'"
+  },
+  {
+    "name": "matrix.admin.token",
+    "type": "java.lang.String",
+    "description": "A description for 'matrix.admin.token'"
+  },
+  {
+    "name": "matrix.domain",
+    "type": "java.lang.String",
+    "description": "A description for 'matrix.domain'"
+  },
+  {
+    "name": "matrix.base.url",
+    "type": "java.lang.String",
+    "description": "A description for 'matrix.base.url'"
+  }
+]}
