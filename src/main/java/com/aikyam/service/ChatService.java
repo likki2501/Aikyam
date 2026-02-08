@@ -1,5 +1,8 @@
 package com.aikyam.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,23 +67,23 @@ public class ChatService {
 	        Integer receiverUserId,
 	        String message) {
 
-	    // 1️⃣ Ensure the sender has a valid session
+	    //  Ensure the sender has a valid session
 	    authService.ensureSession(senderMatrixId, senderUsername, senderPassword);
 
-	    // 2️⃣ Get access token for the sender
+	    //  Get access token for the sender
 	    String accessToken = tokenCache.getToken(senderMatrixId);
 
-	    // 3️⃣ Lookup receiver Matrix ID
+	    // Lookup receiver Matrix ID
 	    User receiver = userRepository.findById(receiverUserId).orElseThrow();
 	    String receiverMatrixId = receiver.getMatrixUserId();
 
-	    // 4️⃣ Get existing room or create a new one
+	    // Get existing room or create a new one
 	    String roomId = getOrCreateRoom(senderMatrixId, receiverMatrixId, accessToken);
 
-	    // 5️⃣ Ensure the token actually belongs to the sender (optional)
+	    //  Ensure the token actually belongs to the sender (optional)
 	    roomService.assertTokenBelongsToUser(accessToken, senderMatrixId);
 
-	    // 6️⃣ Send message — do NOT call joinRoom or ensureJoined for the sender
+	    //️⃣ Send message — do NOT call joinRoom or ensureJoined for the sender
 	    roomService.sendMessage(accessToken, roomId, senderMatrixId, message);
 	}
 	private String getOrCreateRoom(String senderMatrixId,String receiverMatrixId,String senderAccessToken) {
@@ -98,5 +101,10 @@ public class ChatService {
 					return roomId;
 				});
 	}
+
+	public List<Map<String, Object>> syncMessages(String matrixUserId,String password) {
+		return matrixService.syncMessages(matrixUserId,password);
+	}
+	
 
 }
